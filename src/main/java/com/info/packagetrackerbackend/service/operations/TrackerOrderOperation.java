@@ -1,4 +1,4 @@
-package com.info.packagetrackerbackend.service;
+package com.info.packagetrackerbackend.service.operations;
 
 import com.info.packagetrackerbackend.model.Order;
 
