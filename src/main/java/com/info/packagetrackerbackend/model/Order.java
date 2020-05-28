@@ -31,8 +31,9 @@ public class Order implements Runnable {
             Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 5_000));
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } finally {
+            latch.countDown();
         }
-        latch.countDown();
     }
 
 }
