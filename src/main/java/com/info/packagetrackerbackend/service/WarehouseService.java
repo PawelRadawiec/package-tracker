@@ -17,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Setter
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class WarehouseService implements Runnable, PackageProcess {
+public class WarehouseService implements PackageProcess {
 
     private static final Logger logger = LogManager.getLogger(WarehouseService.class);
 

@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Setter
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class SortingPlantService implements Runnable, PackageProcess {
+public class SortingPlantService implements PackageProcess {
 
     private static final Logger logger = LogManager.getLogger(SortingPlantService.class);
 
