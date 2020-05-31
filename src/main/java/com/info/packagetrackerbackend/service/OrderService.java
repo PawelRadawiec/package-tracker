@@ -11,14 +11,48 @@ import java.util.concurrent.Executors;
 @Service
 public class OrderService implements TrackerOrderOperation {
 
+    private WarehouseService warehouseService;
+    private SortingPlantService sortingPlantService;
+    private TransportService transportService;
+    private PackageStartService packageStartService;
+
+    public OrderService(WarehouseService warehouseService, SortingPlantService sortingPlantService, TransportService transportService, PackageStartService packageStartService) {
+        this.warehouseService = warehouseService;
+        this.sortingPlantService = sortingPlantService;
+        this.transportService = transportService;
+        this.packageStartService = packageStartService;
+    }
+
     @Override
     public String startOrder(String name) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        CountDownLatch latch = new CountDownLatch(5);
         Order order = new Order(name, "AACK");
-        executorService.execute(new WarehouseService(order, latch));
-        executorService.execute(new SortingPlantService(order, latch));
+        packageStartService.create(order);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        CountDownLatch latch = new CountDownLatch(3);
+
+        warehouseStep(order, latch, executorService);
+        sortingPlantStep(order, latch, executorService);
+        transportStep(order, latch, executorService);
+
         return "wait for status";
+    }
+
+    private void warehouseStep(Order order, CountDownLatch latch, ExecutorService executor) {
+        warehouseService.setLatch(latch);
+        warehouseService.setOrder(order);
+        executor.execute(warehouseService);
+    }
+
+    private void sortingPlantStep(Order order, CountDownLatch latch, ExecutorService executor) {
+        sortingPlantService.setLatch(latch);
+        sortingPlantService.setOrder(order);
+        executor.execute(sortingPlantService);
+    }
+
+    private void transportStep(Order order, CountDownLatch latch, ExecutorService executor) {
+        transportService.setLatch(latch);
+        transportService.setOrder(order);
+        executor.execute(transportService);
     }
 
 }
