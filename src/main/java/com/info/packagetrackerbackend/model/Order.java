@@ -3,6 +3,7 @@ package com.info.packagetrackerbackend.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "package_order")
 @NoArgsConstructor
 public class Order {

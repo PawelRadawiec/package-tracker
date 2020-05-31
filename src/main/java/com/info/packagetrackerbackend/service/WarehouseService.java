@@ -4,8 +4,9 @@ package com.info.packagetrackerbackend.service;
 import com.info.packagetrackerbackend.model.Order;
 import com.info.packagetrackerbackend.service.operations.PackageProcess;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
-import lombok.Getter;
 import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,12 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
 
-@Getter
 @Setter
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class WarehouseService implements Runnable, PackageProcess {
+
+    private static final Logger logger = LogManager.getLogger(WarehouseService.class);
 
     private Order order;
     private CountDownLatch latch;
@@ -37,11 +39,10 @@ public class WarehouseService implements Runnable, PackageProcess {
         order.setStatus("WAREHOUSE");
         repository.update(order);
         try {
-            System.out.println("Process package in warehouse: " + order.getName() + " | code: " + order.getCode() + " | status: " + order.getStatus());
-
+            logger.info("Process package in warehouse: " + order.toString());
             Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 5_000));
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             latch.countDown();
         }
