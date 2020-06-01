@@ -15,15 +15,18 @@ public class OrderService implements TrackerOrderOperation {
     private WarehouseService warehouseService;
     private SortingPlantService sortingPlantService;
     private TransportService transportService;
+    private ParcelLockerService lockerService;
     private PackageStartService packageStartService;
 
     public OrderService(
             WarehouseService warehouseService, SortingPlantService sortingPlantService,
-            TransportService transportService, PackageStartService packageStartService
+            TransportService transportService, ParcelLockerService lockerService,
+            PackageStartService packageStartService
     ) {
         this.warehouseService = warehouseService;
         this.sortingPlantService = sortingPlantService;
         this.transportService = transportService;
+        this.lockerService = lockerService;
         this.packageStartService = packageStartService;
     }
 
@@ -37,6 +40,8 @@ public class OrderService implements TrackerOrderOperation {
         executeService(warehouseService, order, latch, executorService);
         executeService(sortingPlantService, order, latch, executorService);
         executeService(transportService, order, latch, executorService);
+        executeService(lockerService, order, latch, executorService);
+        executorService.shutdown();
 
         return "wait for status";
     }
