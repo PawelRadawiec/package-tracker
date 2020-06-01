@@ -5,11 +5,10 @@ import com.info.packagetrackerbackend.model.Order;
 import com.info.packagetrackerbackend.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(value = "/order/")
 public class AppInfoController {
 
     private OrderService service;
@@ -18,9 +17,9 @@ public class AppInfoController {
         this.service = service;
     }
 
-    @GetMapping(value = "/order/{name}")
-    public ResponseEntity<String> info(@PathVariable("name") String name) {
-        return new ResponseEntity<String>(service.startOrder(name), HttpStatus.OK);
+    @PostMapping(value = "start")
+    public ResponseEntity<Order> start(@RequestBody Order order) {
+        return new ResponseEntity<Order>(service.startOrder(order), HttpStatus.OK);
     }
 
 }

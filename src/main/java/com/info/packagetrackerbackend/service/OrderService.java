@@ -3,6 +3,7 @@ package com.info.packagetrackerbackend.service;
 import com.info.packagetrackerbackend.model.Order;
 import com.info.packagetrackerbackend.service.operations.PackageProcess;
 import com.info.packagetrackerbackend.service.operations.TrackerOrderOperation;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CountDownLatch;
@@ -31,11 +32,11 @@ public class OrderService implements TrackerOrderOperation {
     }
 
     @Override
-    public String startOrder(String name) {
-        Order order = new Order(name, "AACK");
+    public Order startOrder(Order order) {
+        expandOrderCode(order);
         packageStartService.create(order);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        CountDownLatch latch = new CountDownLatch(3);
+        CountDownLatch latch = new CountDownLatch(4);
 
         executeService(warehouseService, order, latch, executorService);
         executeService(sortingPlantService, order, latch, executorService);
@@ -43,7 +44,11 @@ public class OrderService implements TrackerOrderOperation {
         executeService(lockerService, order, latch, executorService);
         executorService.shutdown();
 
-        return "wait for status";
+        return order;
+    }
+
+    private void expandOrderCode(Order order) {
+        order.setCode(RandomStringUtils.randomAlphanumeric(20));
     }
 
     private void executeService(
