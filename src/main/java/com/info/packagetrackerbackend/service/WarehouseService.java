@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CountDownLatch;
@@ -24,9 +25,14 @@ public class WarehouseService implements PackageProcess {
     private Order order;
     private CountDownLatch latch;
     private OrderRepository repository;
+    private SimpMessageSendingOperations messageSending;
 
-    public WarehouseService(OrderRepository repository) {
+    public WarehouseService(
+            OrderRepository repository,
+            SimpMessageSendingOperations messageSending
+    ) {
         this.repository = repository;
+        this.messageSending = messageSending;
     }
 
     @Override
@@ -41,11 +47,17 @@ public class WarehouseService implements PackageProcess {
         try {
             logger.info("Process package in warehouse: " + order.toString());
             Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 5_000));
+            sendMessage(order);
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
         } finally {
             latch.countDown();
         }
+    }
+
+    @Override
+    public void sendMessage(Order order) {
+        messageSending.convertAndSend("/topic/package", order);
     }
 
 
