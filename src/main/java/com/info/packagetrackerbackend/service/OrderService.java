@@ -4,13 +4,17 @@ import com.info.packagetrackerbackend.model.Order;
 import com.info.packagetrackerbackend.service.operations.PackageProcess;
 import com.info.packagetrackerbackend.service.operations.TrackerOrderOperation;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Service
+@Scope("prototype")
+@Transactional
 public class OrderService implements TrackerOrderOperation {
 
     private WarehouseService warehouseService;
