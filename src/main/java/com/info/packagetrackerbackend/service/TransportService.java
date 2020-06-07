@@ -1,6 +1,7 @@
 package com.info.packagetrackerbackend.service;
 
 import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.OrganizationColor;
 import com.info.packagetrackerbackend.service.operations.PackageProcess;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import lombok.Setter;
@@ -42,6 +43,7 @@ public class TransportService implements PackageProcess {
     @Override
     public void process() {
         order.setStatus("TRANSPORT");
+        order.setStatusColor(OrganizationColor.GREEN.getColor());
         repository.update(order);
         try {
             logger.info("Package is on way: " + order.toString());

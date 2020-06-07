@@ -2,6 +2,7 @@ package com.info.packagetrackerbackend.service;
 
 
 import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.OrganizationColor;
 import com.info.packagetrackerbackend.service.operations.PackageProcess;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import lombok.Setter;
@@ -43,6 +44,7 @@ public class WarehouseService implements PackageProcess {
     @Override
     public void process() {
         order.setStatus("WAREHOUSE");
+        order.setStatusColor(OrganizationColor.BLUE.getColor());
         repository.update(order);
         try {
             logger.info("Process package in warehouse: " + order.toString());

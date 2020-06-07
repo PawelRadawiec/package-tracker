@@ -22,6 +22,7 @@ public class Order {
     private String name;
     private String code;
     private String status;
+    private String statusColor;
 
     public Order(String name, String code) {
         this.name = name;
