@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 
 @Getter
@@ -23,6 +24,18 @@ public class Order {
     private String code;
     private String status;
     private String statusColor;
+    private LocalDate orderStartDate;
+    private LocalDate orderEndDate;
+    private String orderType;
+    private String transportType;
+
+    @OneToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private PersonOrder person;
+
+    @OneToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private OrderAddress address;
 
     public Order(String name, String code) {
         this.name = name;
