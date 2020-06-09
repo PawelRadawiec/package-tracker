@@ -35,6 +35,12 @@ public class OrderService implements TrackerOrderOperation {
         this.packageStartService = packageStartService;
     }
 
+    public Order createOrder(Order order) {
+        expandOrderCode(order);
+        packageStartService.create(order);
+        return order;
+    }
+
     @Override
     public Order startOrder(Order order) {
         expandOrderCode(order);

@@ -9,19 +9,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("*")
 @Scope("prototype")
 @RequestMapping(value = "/order/")
-public class AppInfoController {
+public class OrderController {
 
     private OrderService service;
 
-    public AppInfoController(OrderService service) {
+    public OrderController(OrderService service) {
         this.service = service;
+    }
+
+    @PostMapping(value = "create")
+    public ResponseEntity<Order> create(@RequestBody Order order) {
+        return new ResponseEntity<>(service.createOrder(order), HttpStatus.OK);
     }
 
     @PostMapping(value = "start")
     public ResponseEntity<Order> start(@RequestBody Order order) {
-        return new ResponseEntity<Order>(service.startOrder(order), HttpStatus.OK);
+        return new ResponseEntity<>(service.startOrder(order), HttpStatus.OK);
     }
 
 }
