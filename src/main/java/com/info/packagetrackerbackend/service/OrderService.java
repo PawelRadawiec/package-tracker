@@ -43,8 +43,6 @@ public class OrderService implements TrackerOrderOperation {
 
     @Override
     public Order startOrder(Order order) {
-        expandOrderCode(order);
-        packageStartService.create(order);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         CountDownLatch latch = new CountDownLatch(4);
 
