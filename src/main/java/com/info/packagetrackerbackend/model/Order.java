@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Getter
@@ -36,6 +37,9 @@ public class Order {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private OrderAddress address;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderHistory> orderHistoryList;
 
     public Order(String name, String code) {
         this.name = name;
