@@ -55,6 +55,11 @@ public class OrderService implements TrackerOrderOperation {
         return order;
     }
 
+    @Override
+    public Order getOrder(Long id, String code) {
+        return packageStartService.getOrder(id, code);
+    }
+
     private void expandOrderCode(Order order) {
         order.setCode(RandomStringUtils.randomAlphanumeric(20));
     }

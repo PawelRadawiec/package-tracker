@@ -1,5 +1,6 @@
 package com.info.packagetrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class OrderAddress {
     private String postalCode;
 
     @OneToOne(mappedBy = "address", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Order order;
 
 }

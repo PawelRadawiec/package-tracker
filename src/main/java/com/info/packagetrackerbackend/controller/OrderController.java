@@ -30,4 +30,12 @@ public class OrderController {
         return new ResponseEntity<>(service.startOrder(order), HttpStatus.OK);
     }
 
+    @GetMapping(value = "{id}/{code}")
+    public ResponseEntity<Order> getOrder(
+            @PathVariable("id") Long id,
+            @PathVariable("code") String code
+    ) {
+        return new ResponseEntity<>(service.getOrder(id, code), HttpStatus.OK);
+    }
+
 }

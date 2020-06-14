@@ -1,5 +1,6 @@
 package com.info.packagetrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class OrderHistory extends DateAudit {
 
     @ManyToOne()
     @JoinColumn(name = "order_id", nullable = false)
+    @JsonBackReference
     private Order order;
 
     public OrderHistory(Order order) {
