@@ -4,8 +4,10 @@ import com.info.packagetrackerbackend.model.OrderHistory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 @Repository
+@Transactional
 public class OrderHistoryRepository {
 
     private EntityManager em;

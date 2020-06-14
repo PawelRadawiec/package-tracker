@@ -1,8 +1,10 @@
 package com.info.packagetrackerbackend.service;
 
 import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.OrderHistory;
 import com.info.packagetrackerbackend.model.OrganizationColor;
 import com.info.packagetrackerbackend.service.operations.PackageProcess;
+import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,13 +30,16 @@ public class ParcelLockerService implements PackageProcess {
     private Order order;
     private CountDownLatch latch;
     private SimpMessageSendingOperations messageSending;
+    private OrderHistoryRepository historyRepository;
 
     public ParcelLockerService(
             OrderRepository orderRepository,
-            SimpMessageSendingOperations messageSending
+            SimpMessageSendingOperations messageSending,
+            OrderHistoryRepository historyRepository
     ) {
         this.orderRepository = orderRepository;
         this.messageSending = messageSending;
+        this.historyRepository = historyRepository;
     }
 
     @Override
@@ -47,6 +52,7 @@ public class ParcelLockerService implements PackageProcess {
         order.setStatus("PARCEL_LOCKER");
         order.setStatusColor(OrganizationColor.ORANGE.getColor());
         orderRepository.update(order);
+        historyRepository.save(new OrderHistory(order));
         try {
             logger.info("Process package in parcel locker: " + order.toString());
             Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 5_000));

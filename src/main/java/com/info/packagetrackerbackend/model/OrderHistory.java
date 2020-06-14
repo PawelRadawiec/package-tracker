@@ -15,9 +15,19 @@ public class OrderHistory extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String code;
+    private String status;
+    private String statusColor;
 
-    @ManyToOne
-    @JoinColumn(name="order_id", nullable=false)
+    @ManyToOne()
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+
+    public OrderHistory(Order order) {
+        this.order = order;
+        this.code = order.getCode();
+        this.status = order.getStatus();
+        this.statusColor = order.getStatusColor();
+    }
 
 }

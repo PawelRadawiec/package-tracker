@@ -38,7 +38,7 @@ public class Order {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private OrderAddress address;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderHistory> orderHistoryList;
 
     public Order(String name, String code) {

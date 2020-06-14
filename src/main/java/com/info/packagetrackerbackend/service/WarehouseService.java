@@ -2,8 +2,10 @@ package com.info.packagetrackerbackend.service;
 
 
 import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.OrderHistory;
 import com.info.packagetrackerbackend.model.OrganizationColor;
 import com.info.packagetrackerbackend.service.operations.PackageProcess;
+import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
@@ -27,13 +29,16 @@ public class WarehouseService implements PackageProcess {
     private CountDownLatch latch;
     private OrderRepository repository;
     private SimpMessageSendingOperations messageSending;
+    private OrderHistoryRepository historyRepository;
 
     public WarehouseService(
             OrderRepository repository,
-            SimpMessageSendingOperations messageSending
+            SimpMessageSendingOperations messageSending,
+            OrderHistoryRepository historyRepository
     ) {
         this.repository = repository;
         this.messageSending = messageSending;
+        this.historyRepository = historyRepository;
     }
 
     @Override
@@ -46,6 +51,7 @@ public class WarehouseService implements PackageProcess {
         order.setStatus("WAREHOUSE");
         order.setStatusColor(OrganizationColor.BLUE.getColor());
         repository.update(order);
+        historyRepository.save(new OrderHistory(order));
         try {
             logger.info("Process package in warehouse: " + order.toString());
             Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 5_000));

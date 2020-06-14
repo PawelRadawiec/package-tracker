@@ -1,8 +1,10 @@
 package com.info.packagetrackerbackend.service;
 
 import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.OrderHistory;
 import com.info.packagetrackerbackend.model.OrganizationColor;
 import com.info.packagetrackerbackend.service.operations.PackageProcess;
+import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
@@ -26,14 +28,16 @@ public class SortingPlantService implements PackageProcess {
     private CountDownLatch latch;
     private OrderRepository repository;
     private SimpMessageSendingOperations messageSending;
-
+    private OrderHistoryRepository historyRepository;
 
     public SortingPlantService(
             OrderRepository repository,
-            SimpMessageSendingOperations messageSending
+            SimpMessageSendingOperations messageSending,
+            OrderHistoryRepository historyRepository
     ) {
         this.repository = repository;
         this.messageSending = messageSending;
+        this.historyRepository = historyRepository;
     }
 
     @Override
@@ -46,6 +50,7 @@ public class SortingPlantService implements PackageProcess {
         order.setStatus("SORTING_PLANT");
         order.setStatusColor(OrganizationColor.YELLOW.getColor());
         repository.update(order);
+        historyRepository.save(new OrderHistory(order));
         try {
             logger.info("Process package in sorting plant: " + order.toString());
             Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 5_000));
