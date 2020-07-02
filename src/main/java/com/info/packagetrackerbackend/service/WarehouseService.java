@@ -54,7 +54,7 @@ public class WarehouseService implements PackageProcess {
         historyRepository.save(new OrderHistory(order));
         try {
             logger.info("Process package in warehouse: " + order.toString());
-            Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 5_000));
+            Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 10_000));
             sendMessage(order);
         } catch (InterruptedException e) {
             logger.error(e.getMessage());

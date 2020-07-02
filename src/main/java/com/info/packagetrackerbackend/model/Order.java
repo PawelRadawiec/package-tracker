@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,20 +29,33 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotEmpty
     private String name;
+
+    @NotEmpty
     private String code;
+
     private String status;
+
     private String statusColor;
+
     private LocalDate orderStartDate;
     private LocalDate orderEndDate;
+
+    @NotEmpty
     private String orderType;
+
+    @NotEmpty
     private String transportType;
 
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     @JsonManagedReference
     private PersonOrder person;
 
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     @JsonManagedReference

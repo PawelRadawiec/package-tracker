@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin("*")
 @Scope("prototype")
@@ -21,7 +23,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "create")
-    public ResponseEntity<Order> create(@RequestBody Order order) {
+    public ResponseEntity<Order> create(@Valid @RequestBody Order order) {
         return new ResponseEntity<>(service.createOrder(order), HttpStatus.OK);
     }
 
