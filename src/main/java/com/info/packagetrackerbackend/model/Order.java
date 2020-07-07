@@ -1,6 +1,5 @@
 package com.info.packagetrackerbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +32,6 @@ public class Order {
     @NotEmpty
     private String name;
 
-    @NotEmpty
     private String code;
 
     private String status;
