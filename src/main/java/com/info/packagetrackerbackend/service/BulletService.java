@@ -12,11 +12,35 @@ public class BulletService {
 
     public List<Bullet> getBullets() {
         return Arrays.asList(
-                new Bullet(BulletType.START, getHeader(BulletType.START), getContent(BulletType.START)),
-                new Bullet(BulletType.WAREHOUSE,  getHeader(BulletType.WAREHOUSE), getContent(BulletType.WAREHOUSE)),
-                new Bullet(BulletType.SORTING_PLANT, getHeader(BulletType.SORTING_PLANT), getContent(BulletType.SORTING_PLANT)),
-                new Bullet(BulletType.TRANSPORT,  getHeader(BulletType.TRANSPORT), getContent(BulletType.TRANSPORT)),
-                new Bullet(BulletType.PARCEL_LOCKER,  getHeader(BulletType.PARCEL_LOCKER), getContent(BulletType.PARCEL_LOCKER))
+                new Bullet(
+                        BulletType.START,
+                        getHeader(BulletType.START),
+                        getContent(BulletType.START),
+                        true
+                ),
+                new Bullet(
+                        BulletType.WAREHOUSE,
+                        getHeader(BulletType.WAREHOUSE),
+                        getContent(BulletType.WAREHOUSE),
+                        false
+                ),
+                new Bullet(
+                        BulletType.SORTING_PLANT,
+                        getHeader(BulletType.SORTING_PLANT),
+                        getContent(BulletType.SORTING_PLANT),
+                        false),
+                new Bullet(
+                        BulletType.TRANSPORT,
+                        getHeader(BulletType.TRANSPORT),
+                        getContent(BulletType.TRANSPORT),
+                        false
+                ),
+                new Bullet(
+                        BulletType.PARCEL_LOCKER,
+                        getHeader(BulletType.PARCEL_LOCKER),
+                        getContent(BulletType.PARCEL_LOCKER),
+                        false
+                )
         );
     }
 
