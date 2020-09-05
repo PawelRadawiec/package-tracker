@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+
 @Service
 public class SortingPlantService {
     private static final Logger logger = LogManager.getLogger(SortingPlantService.class);
@@ -29,18 +30,24 @@ public class SortingPlantService {
         this.historyRepository = historyRepository;
     }
 
-    public void process(Order order) {
+    public Runnable process(Order order) {
+        return () -> {
+            try {
+                Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 10_000));
+                create(order);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
+    }
+
+    private void create(Order order) {
         order.setStatus("SORTING_PLANT");
         order.setStatusColor(OrganizationColor.YELLOW.getColor());
         repository.update(order);
         historyRepository.save(new OrderHistory(order));
-        try {
-            logger.info("Process package in sorting plant: " + order.toString());
-            Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 20_000));
-            messageService.sendOrderMessage(order);
-        } catch (InterruptedException e) {
-            logger.error(e.getMessage());
-        }
+        logger.info("Process package in sorting plant: " + order.toString());
+        messageService.sendOrderMessage(order);
     }
 
 }
