@@ -2,12 +2,15 @@ package com.info.packagetrackerbackend.controller;
 
 
 import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.OrderHistory;
 import com.info.packagetrackerbackend.service.OrderService;
+import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -15,9 +18,11 @@ import javax.validation.Valid;
 public class OrderController {
 
     private OrderService service;
+    private OrderHistoryRepository orderHistoryRepository;
 
-    public OrderController(OrderService service) {
+    public OrderController(OrderService service, OrderHistoryRepository orderHistoryRepository) {
         this.service = service;
+        this.orderHistoryRepository = orderHistoryRepository;
     }
 
     @PostMapping(value = "create")
@@ -36,6 +41,11 @@ public class OrderController {
             @PathVariable("code") String code
     ) {
         return new ResponseEntity<>(service.getOrder(id, code), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}/history")
+    public ResponseEntity<List<OrderHistory>> getHistory(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(orderHistoryRepository.getByOrderId(id), HttpStatus.OK);
     }
 
 }

@@ -1,24 +1,13 @@
 package com.info.packagetrackerbackend.service.repository;
 
 import com.info.packagetrackerbackend.model.OrderHistory;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
-@Transactional
-public class OrderHistoryRepository {
-
-    private EntityManager em;
-
-    public OrderHistoryRepository(EntityManager em) {
-        this.em = em;
-    }
-
-    public OrderHistory save(OrderHistory orderHistory) {
-        em.persist(orderHistory);
-        return orderHistory;
-    }
-
+public interface OrderHistoryRepository extends JpaRepository<OrderHistory, Long> {
+    List<OrderHistory> getByOrderId(@Param("id") Long id);
 }

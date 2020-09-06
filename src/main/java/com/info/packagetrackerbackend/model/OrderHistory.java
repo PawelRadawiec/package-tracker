@@ -11,6 +11,11 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
+@NamedQuery(
+        name = "OrderHistory.getByOrderId",
+        query = "select oh from OrderHistory oh" +
+                " join oh.order o on o.id = ?1"
+)
 public class OrderHistory extends DateAudit {
 
     @Id
