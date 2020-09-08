@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -40,13 +41,20 @@ public class OrderService implements TrackerOrderOperation {
     @Override
     public Order startOrder(Order order) {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
+        CountDownLatch countDownLatch = new CountDownLatch(4);
         Arrays.asList(
-                warehouseService.process(order),
-                sortingPlantService.process(order),
-                transportService.process(order),
-                lockerService.process(order)
+                warehouseService.process(order, countDownLatch),
+                sortingPlantService.process(order, countDownLatch),
+                transportService.process(order, countDownLatch),
+                lockerService.process(order, countDownLatch)
         ).forEach(executorService::execute);
-        executorService.shutdown();
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            executorService.shutdown();
+        }
         return order;
     }
 

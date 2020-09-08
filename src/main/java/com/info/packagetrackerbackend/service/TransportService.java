@@ -5,15 +5,14 @@ import com.info.packagetrackerbackend.model.OrderHistory;
 import com.info.packagetrackerbackend.model.OrganizationColor;
 import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
-import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-@Setter
 @Service
 public class TransportService {
     private static final Logger logger = LogManager.getLogger(TransportService.class);
@@ -32,11 +31,12 @@ public class TransportService {
         this.historyRepository = historyRepository;
     }
 
-    public Runnable process(Order order) {
+    public Runnable process(Order order, CountDownLatch latch) {
         return () -> {
             try {
                 Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 10_000));
                 create(order);
+                latch.countDown();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
