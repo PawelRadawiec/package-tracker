@@ -46,7 +46,7 @@ public class ParcelLockerService {
     private void create(Order order) {
         order.setStatus("PARCEL_LOCKER");
         order.setStatusColor(OrganizationColor.ORANGE.getColor());
-        orderRepository.update(order);
+        orderRepository.save(order);
         historyRepository.save(new OrderHistory(order));
         logger.info("Process package in parcel locker: " + order.toString());
         messageService.sendOrderMessage(order);

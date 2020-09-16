@@ -46,7 +46,7 @@ public class WarehouseService {
     private void create(Order order) {
         order.setStatus("WAREHOUSE");
         order.setStatusColor(OrganizationColor.BLUE.getColor());
-        repository.update(order);
+        repository.save(order);
         historyRepository.save(new OrderHistory(order));
         logger.info("Process package in warehouse: " + order.toString());
         messageService.sendOrderMessage(order);

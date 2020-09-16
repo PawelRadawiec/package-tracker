@@ -48,4 +48,9 @@ public class OrderController {
         return new ResponseEntity<>(orderHistoryRepository.getByOrderId(id), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/search")
+    public ResponseEntity<List<Order>> search() {
+        return new ResponseEntity<>(service.search(), HttpStatus.OK);
+    }
+
 }

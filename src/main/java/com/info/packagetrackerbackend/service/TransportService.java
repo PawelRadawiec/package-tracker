@@ -46,7 +46,7 @@ public class TransportService {
     private void create(Order order) {
         order.setStatus("TRANSPORT");
         order.setStatusColor(OrganizationColor.GREEN.getColor());
-        repository.update(order);
+        repository.save(order);
         historyRepository.save(new OrderHistory(order));
         logger.info("Package is on way: " + order.toString());
         messageService.sendOrderMessage(order);

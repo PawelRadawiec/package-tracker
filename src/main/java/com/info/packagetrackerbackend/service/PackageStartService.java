@@ -19,7 +19,7 @@ public class PackageStartService {
     }
 
     public Order getOrder(Long id, String code) {
-        return repository.getOrderByLongAndCode(id, code).orElse(new Order());
+        return repository.getOrderByIdAndCode(id, code);
     }
 
 }

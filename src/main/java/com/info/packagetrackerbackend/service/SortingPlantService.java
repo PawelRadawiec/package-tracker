@@ -46,7 +46,7 @@ public class SortingPlantService {
     private void create(Order order) {
         order.setStatus("SORTING_PLANT");
         order.setStatusColor(OrganizationColor.YELLOW.getColor());
-        repository.update(order);
+        repository.save(order);
         historyRepository.save(new OrderHistory(order));
         logger.info("Process package in sorting plant: " + order.toString());
         messageService.sendOrderMessage(order);
