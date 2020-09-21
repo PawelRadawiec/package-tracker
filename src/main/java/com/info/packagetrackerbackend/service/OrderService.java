@@ -1,14 +1,17 @@
 package com.info.packagetrackerbackend.service;
 
 import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.OrderListRequest;
 import com.info.packagetrackerbackend.service.operations.TrackerOrderOperation;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
+import com.info.packagetrackerbackend.service.repository.specification.OrderListSpecification;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,18 +25,20 @@ public class OrderService implements TrackerOrderOperation {
     private ParcelLockerService lockerService;
     private PackageStartService packageStartService;
     private OrderRepository orderRepository;
+    private OrderListSpecification listSpecification;
 
     public OrderService(
             WarehouseService warehouseService, SortingPlantService sortingPlantService,
             TransportService transportService, ParcelLockerService lockerService,
-            PackageStartService packageStartService,
-            OrderRepository orderRepository) {
+            PackageStartService packageStartService, OrderRepository orderRepository,
+            OrderListSpecification listSpecification) {
         this.warehouseService = warehouseService;
         this.sortingPlantService = sortingPlantService;
         this.transportService = transportService;
         this.lockerService = lockerService;
         this.packageStartService = packageStartService;
         this.orderRepository = orderRepository;
+        this.listSpecification = listSpecification;
     }
 
     public Order createOrder(Order order) {
@@ -68,8 +73,8 @@ public class OrderService implements TrackerOrderOperation {
     }
 
     @Override
-    public List<Order> search() {
-        return orderRepository.findAll();
+    public Page<Order> search(OrderListRequest request, Pageable pageable) {
+        return orderRepository.findAll(listSpecification.getFilter(request), pageable);
     }
 
     private void expandOrderCode(Order order) {

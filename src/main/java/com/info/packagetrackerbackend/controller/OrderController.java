@@ -3,8 +3,11 @@ package com.info.packagetrackerbackend.controller;
 
 import com.info.packagetrackerbackend.model.Order;
 import com.info.packagetrackerbackend.model.OrderHistory;
+import com.info.packagetrackerbackend.model.OrderListRequest;
 import com.info.packagetrackerbackend.service.OrderService;
 import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,8 +52,8 @@ public class OrderController {
     }
 
     @GetMapping(value = "/search")
-    public ResponseEntity<List<Order>> search() {
-        return new ResponseEntity<>(service.search(), HttpStatus.OK);
+    public ResponseEntity<Page<Order>> search(OrderListRequest request, Pageable pageable) {
+        return new ResponseEntity<>(service.search(request, pageable), HttpStatus.OK);
     }
 
 }
