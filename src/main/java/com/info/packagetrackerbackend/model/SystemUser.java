@@ -10,14 +10,20 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Table(name = "package_system_user")
 @NoArgsConstructor
 public class SystemUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
     private String username;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

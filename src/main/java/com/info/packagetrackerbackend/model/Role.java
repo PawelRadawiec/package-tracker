@@ -1,5 +1,6 @@
 package com.info.packagetrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Table(name = "roles")
 @NoArgsConstructor
 public class Role {
 
@@ -20,6 +22,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private UserRole name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<SystemUser> users;
 
