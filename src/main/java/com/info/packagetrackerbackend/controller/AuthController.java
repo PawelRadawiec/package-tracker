@@ -1,5 +1,6 @@
 package com.info.packagetrackerbackend.controller;
 
+import com.info.packagetrackerbackend.model.LoginRequest;
 import com.info.packagetrackerbackend.model.SystemUser;
 import com.info.packagetrackerbackend.service.AuthorizationService;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,11 @@ public class AuthController {
 
     public AuthController(AuthorizationService authorizationService) {
         this.authorizationService = authorizationService;
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        return new ResponseEntity<>(authorizationService.login(request), HttpStatus.OK);
     }
 
     @PostMapping(value = "/register")
