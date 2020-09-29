@@ -18,4 +18,8 @@ public class PackageStartService {
         return order;
     }
 
+    public Order getOrder(Long id, String code) {
+        return repository.getOrderByIdAndCode(id, code);
+    }
+
 }

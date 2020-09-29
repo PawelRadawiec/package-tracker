@@ -12,4 +12,6 @@ public interface PackageProcess extends Runnable {
 
     void setOrder(Order order);
 
+    void sendMessage(Order order);
+
 }
