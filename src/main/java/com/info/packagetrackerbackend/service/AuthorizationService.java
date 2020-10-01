@@ -53,6 +53,9 @@ public class AuthorizationService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        SystemUser user = userRepository.findByUsername(request.getUsername()).orElse(new SystemUser());
+        user.setLogged(true);
+        userRepository.save(user);
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
@@ -64,5 +67,11 @@ public class AuthorizationService {
                 roles);
     }
 
+    public void logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SystemUser user = userRepository.findByUsername(authentication.getName()).orElseGet(SystemUser::new);
+        user.setLogged(false);
+        userRepository.save(user);
+    }
 
 }

@@ -28,5 +28,16 @@ public class AuthController {
         return new ResponseEntity<>(authorizationService.registerUser(user), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/logout")
+    public ResponseEntity logout() {
+        this.authorizationService.logout();
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/test/{value}")
+    public String test(@PathVariable("value") String value) {
+        return "test: " + value;
+    }
+
 
 }
