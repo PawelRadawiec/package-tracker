@@ -23,11 +23,6 @@ public class AuthController {
         return new ResponseEntity<>(authorizationService.login(request), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/register")
-    public ResponseEntity<SystemUser> register(@RequestBody SystemUser user) {
-        return new ResponseEntity<>(authorizationService.registerUser(user), HttpStatus.OK);
-    }
-
     @GetMapping(value = "/logout")
     public ResponseEntity logout() {
         this.authorizationService.logout();
