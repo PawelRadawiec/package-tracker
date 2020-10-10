@@ -25,6 +25,7 @@ public class RegistrationValidator extends GenericValidator implements Validator
     public void validate(Object o, Errors errors) {
         SystemUser user = (SystemUser) o;
         validateRequired(user, errors);
+        validateUniqueness(user, errors);
     }
 
     private void validateRequired(SystemUser user, Errors errors) {
@@ -34,7 +35,12 @@ public class RegistrationValidator extends GenericValidator implements Validator
     }
 
     private void validateUniqueness(SystemUser user, Errors errors) {
-
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            validateIfTrue(repository.existsByEmail(user.getEmail()), "email", ValidationCode.UNIQUE.getValue(), errors);
+        }
+        if (!StringUtils.isEmpty(user.getUsername())) {
+            validateIfTrue(repository.existsByUsername(user.getUsername()), "username", ValidationCode.UNIQUE.getValue(), errors);
+        }
     }
 
 }
