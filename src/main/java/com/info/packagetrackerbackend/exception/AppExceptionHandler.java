@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
@@ -23,13 +22,13 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
             MethodArgumentNotValidException ex, HttpHeaders headers,
             HttpStatus status, WebRequest request
     ) {
-        Map<String, String> invalidFields = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach(error -> createError(error, invalidFields));
-        return new ResponseEntity<>(invalidFields, HttpStatus.BAD_REQUEST);
+        List<List<String>> response = new ArrayList<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> appendResponse(error, response));
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    private void createError(ObjectError error, Map<String, String> invalidFields) {
-        invalidFields.put(((FieldError) error).getField(), error.getDefaultMessage());
+    private void appendResponse(ObjectError error, List<List<String>> response) {
+        response.add(Arrays.asList(((FieldError) error).getField(), error.getDefaultMessage()));
     }
 
 }
