@@ -26,6 +26,8 @@ public class SystemUser {
 
     private String password;
 
+    private Boolean logged;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",

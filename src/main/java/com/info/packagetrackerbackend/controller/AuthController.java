@@ -1,11 +1,12 @@
 package com.info.packagetrackerbackend.controller;
 
 import com.info.packagetrackerbackend.model.LoginRequest;
-import com.info.packagetrackerbackend.model.SystemUser;
 import com.info.packagetrackerbackend.service.AuthorizationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,13 +20,19 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         return new ResponseEntity<>(authorizationService.login(request), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/register")
-    public ResponseEntity<SystemUser> register(@RequestBody SystemUser user) {
-        return new ResponseEntity<>(authorizationService.registerUser(user), HttpStatus.OK);
+    @GetMapping(value = "/logout")
+    public ResponseEntity logout() {
+        this.authorizationService.logout();
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/test/{value}")
+    public String test(@PathVariable("value") String value) {
+        return "test: " + value;
     }
 
 
