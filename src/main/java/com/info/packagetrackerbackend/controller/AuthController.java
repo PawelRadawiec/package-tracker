@@ -30,10 +30,9 @@ public class AuthController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/test/{value}")
-    public String test(@PathVariable("value") String value) {
-        return "test: " + value;
+    @GetMapping(value = "/app/{value}")
+    public String appInfo(@PathVariable("value") String value) {
+        return "Tracker app: " + value;
     }
-
 
 }
