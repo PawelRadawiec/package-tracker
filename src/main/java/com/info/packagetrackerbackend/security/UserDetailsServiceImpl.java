@@ -1,6 +1,6 @@
 package com.info.packagetrackerbackend.security;
 
-import com.info.packagetrackerbackend.model.SystemUser;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.service.repository.SystemUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

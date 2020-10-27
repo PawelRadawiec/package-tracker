@@ -2,7 +2,7 @@ package com.info.packagetrackerbackend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.order.Order;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

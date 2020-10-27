@@ -1,6 +1,6 @@
 package com.info.packagetrackerbackend.service.repository;
 
-import com.info.packagetrackerbackend.model.SystemUser;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

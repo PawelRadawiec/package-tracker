@@ -1,6 +1,6 @@
 package com.info.packagetrackerbackend.controller;
 
-import com.info.packagetrackerbackend.model.LoginRequest;
+import com.info.packagetrackerbackend.model.auth.LoginRequest;
 import com.info.packagetrackerbackend.service.AuthorizationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

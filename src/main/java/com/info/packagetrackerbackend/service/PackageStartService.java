@@ -1,6 +1,6 @@
 package com.info.packagetrackerbackend.service;
 
-import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.order.Order;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 

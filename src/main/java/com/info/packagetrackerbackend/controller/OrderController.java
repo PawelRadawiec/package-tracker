@@ -1,9 +1,9 @@
 package com.info.packagetrackerbackend.controller;
 
 
-import com.info.packagetrackerbackend.model.Order;
-import com.info.packagetrackerbackend.model.OrderHistory;
-import com.info.packagetrackerbackend.model.OrderListRequest;
+import com.info.packagetrackerbackend.model.order.Order;
+import com.info.packagetrackerbackend.model.order.OrderHistory;
+import com.info.packagetrackerbackend.model.order.OrderListRequest;
 import com.info.packagetrackerbackend.service.OrderService;
 import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import org.springframework.data.domain.Page;

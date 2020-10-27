@@ -1,6 +1,6 @@
 package com.info.packagetrackerbackend.service.operations;
 
-import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.order.Order;
 
 import java.util.concurrent.CountDownLatch;
 

@@ -1,4 +1,4 @@
-package com.info.packagetrackerbackend.model;
+package com.info.packagetrackerbackend.model.auth;
 
 public enum UserRole {
     ROLE_USER,

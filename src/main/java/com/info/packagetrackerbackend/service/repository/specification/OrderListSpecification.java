@@ -1,7 +1,7 @@
 package com.info.packagetrackerbackend.service.repository.specification;
 
-import com.info.packagetrackerbackend.model.Order;
-import com.info.packagetrackerbackend.model.OrderListRequest;
+import com.info.packagetrackerbackend.model.order.Order;
+import com.info.packagetrackerbackend.model.order.OrderListRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 

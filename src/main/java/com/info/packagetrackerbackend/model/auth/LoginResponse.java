@@ -1,4 +1,4 @@
-package com.info.packagetrackerbackend.model;
+package com.info.packagetrackerbackend.model.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.info.packagetrackerbackend.service.repository;
 
-import com.info.packagetrackerbackend.model.Role;
-import com.info.packagetrackerbackend.model.UserRole;
+import com.info.packagetrackerbackend.model.auth.Role;
+import com.info.packagetrackerbackend.model.auth.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

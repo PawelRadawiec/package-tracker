@@ -1,6 +1,7 @@
-package com.info.packagetrackerbackend.model;
+package com.info.packagetrackerbackend.model.order;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.info.packagetrackerbackend.model.DateAudit;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.info.packagetrackerbackend.controller;
 
-import com.info.packagetrackerbackend.model.SystemUser;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.service.SystemUserService;
 import com.info.packagetrackerbackend.validators.RegistrationValidator;
 import org.springframework.http.HttpStatus;

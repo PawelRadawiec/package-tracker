@@ -1,4 +1,4 @@
-package com.info.packagetrackerbackend.model;
+package com.info.packagetrackerbackend.model.order;
 
 import lombok.Getter;
 import lombok.Setter;

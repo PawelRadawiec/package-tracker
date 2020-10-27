@@ -1,6 +1,7 @@
-package com.info.packagetrackerbackend.model;
+package com.info.packagetrackerbackend.model.order;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.info.packagetrackerbackend.model.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,6 +47,11 @@ public class Order {
 
     @NotEmpty
     private String transportType;
+
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+//    @OneToOne(mappedBy = "order")
+    private Product product;
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)

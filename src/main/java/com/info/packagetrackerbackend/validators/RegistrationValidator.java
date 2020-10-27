@@ -1,6 +1,6 @@
 package com.info.packagetrackerbackend.validators;
 
-import com.info.packagetrackerbackend.model.SystemUser;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.service.repository.SystemUserRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

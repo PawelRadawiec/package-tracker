@@ -1,8 +1,8 @@
 package com.info.packagetrackerbackend.service;
 
-import com.info.packagetrackerbackend.model.Role;
-import com.info.packagetrackerbackend.model.SystemUser;
-import com.info.packagetrackerbackend.model.UserRole;
+import com.info.packagetrackerbackend.model.auth.Role;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
+import com.info.packagetrackerbackend.model.auth.UserRole;
 import com.info.packagetrackerbackend.service.repository.RoleRepository;
 import com.info.packagetrackerbackend.service.repository.SystemUserRepository;
 import com.info.packagetrackerbackend.validators.RegistrationValidator;

@@ -1,4 +1,4 @@
-package com.info.packagetrackerbackend.model;
+package com.info.packagetrackerbackend.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

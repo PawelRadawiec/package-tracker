@@ -1,7 +1,7 @@
 package com.info.packagetrackerbackend.service;
 
 import com.info.packagetrackerbackend.model.Product;
-import com.info.packagetrackerbackend.model.SystemUser;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.service.repository.ProductRepository;
 import com.info.packagetrackerbackend.service.repository.SystemUserRepository;
 import org.springframework.data.domain.Page;
@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductService {

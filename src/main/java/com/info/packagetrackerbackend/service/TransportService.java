@@ -1,7 +1,7 @@
 package com.info.packagetrackerbackend.service;
 
-import com.info.packagetrackerbackend.model.Order;
-import com.info.packagetrackerbackend.model.OrderHistory;
+import com.info.packagetrackerbackend.model.order.Order;
+import com.info.packagetrackerbackend.model.order.OrderHistory;
 import com.info.packagetrackerbackend.model.OrganizationColor;
 import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;

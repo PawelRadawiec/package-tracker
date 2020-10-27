@@ -1,7 +1,7 @@
 package com.info.packagetrackerbackend.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.info.packagetrackerbackend.model.SystemUser;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

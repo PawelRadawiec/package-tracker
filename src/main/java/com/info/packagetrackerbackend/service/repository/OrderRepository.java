@@ -1,6 +1,6 @@
 package com.info.packagetrackerbackend.service.repository;
 
-import com.info.packagetrackerbackend.model.Order;
+import com.info.packagetrackerbackend.model.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.query.Param;

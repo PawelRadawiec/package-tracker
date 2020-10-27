@@ -1,6 +1,8 @@
 package com.info.packagetrackerbackend.service;
 
-import com.info.packagetrackerbackend.model.*;
+import com.info.packagetrackerbackend.model.auth.LoginRequest;
+import com.info.packagetrackerbackend.model.auth.LoginResponse;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.security.JwtUtils;
 import com.info.packagetrackerbackend.security.UserDetailsImpl;
 import com.info.packagetrackerbackend.service.repository.SystemUserRepository;
