@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   packagetracker:
-    build: .
+    build: ..
     ports:
       - "8080:8080"
     environment:
@@ -9,8 +9,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - WEBSOCKET_RELAY_PORT=61614
-      - SPRING_RABBITMQ_HOST=
-      - SPRING_RABBITMQ_ADDRESSES=localhost
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - db
       - rabbitmq
