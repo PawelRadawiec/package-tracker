@@ -32,7 +32,7 @@ public class AuthController {
 
     @GetMapping(value = "/app/{value}")
     public String appInfo(@PathVariable("value") String value) {
-        return "Tracker app v1.0.1: " + value;
+        return "Tracker app v1.0.3: " + value;
     }
 
 }

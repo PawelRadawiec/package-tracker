@@ -1,5 +1,6 @@
 package com.info.packagetrackerbackend.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -9,6 +10,9 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    @Value("${websocket.relay.port}")
+    private int relayPort;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -21,8 +25,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app")
                 .enableStompBrokerRelay("/topic", "/topic/message/**")
-                .setRelayHost("localhost")
-                .setRelayPort(61613)
+                .setRelayPort(relayPort)
                 .setClientLogin("guest")
                 .setClientPasscode("guest");
     }
