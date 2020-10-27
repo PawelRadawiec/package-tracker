@@ -36,7 +36,6 @@ public class Product {
     private SystemUser owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "basket_id", nullable = false)
     private Basket basket;
 
     @OneToOne(mappedBy = "product")

@@ -3,9 +3,9 @@ package com.info.packagetrackerbackend.service;
 import com.info.packagetrackerbackend.model.auth.Role;
 import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.model.auth.UserRole;
+import com.info.packagetrackerbackend.model.basket.Basket;
 import com.info.packagetrackerbackend.service.repository.RoleRepository;
 import com.info.packagetrackerbackend.service.repository.SystemUserRepository;
-import com.info.packagetrackerbackend.validators.RegistrationValidator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +17,17 @@ public class SystemUserService {
 
     private PasswordEncoder encoder;
     private RoleRepository roleRepository;
-    private RegistrationValidator validator;
     private SystemUserRepository userRepository;
+    private BasketService basketService;
 
     public SystemUserService(
             SystemUserRepository userRepository,
             PasswordEncoder encoder, RoleRepository roleRepository,
-            RegistrationValidator validator) {
+            BasketService basketService) {
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.roleRepository = roleRepository;
-        this.validator = validator;
+        this.basketService = basketService;
     }
 
     public SystemUser registerUser(SystemUser user) {
@@ -36,6 +36,13 @@ public class SystemUserService {
         roles.add(roleRepository.findByName(UserRole.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("Role not found")));
         user.setRoles(roles);
         userRepository.save(user);
+        appendBasket(user);
         return user;
+    }
+
+    private void appendBasket(SystemUser user) {
+        Basket basket = new Basket();
+        basket.setOwner(user);
+        basketService.create(basket);
     }
 }

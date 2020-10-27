@@ -1,11 +1,14 @@
 package com.info.packagetrackerbackend.model.basket;
 
+import com.info.packagetrackerbackend.model.Product;
 import com.info.packagetrackerbackend.model.auth.SystemUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,5 +23,11 @@ public class Basket {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private SystemUser owner;
+
+    @OneToMany(
+            mappedBy = "basket",
+            cascade = CascadeType.ALL
+    )
+    private Set<Product> products = new HashSet<>();
 
 }
