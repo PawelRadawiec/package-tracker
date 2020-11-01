@@ -1,5 +1,6 @@
 package com.info.packagetrackerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.model.basket.Basket;
@@ -36,6 +37,7 @@ public class Product {
     private SystemUser owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Basket basket;
 
     @OneToOne(mappedBy = "product")

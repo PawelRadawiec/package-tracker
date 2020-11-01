@@ -31,4 +31,9 @@ public class ProductController {
         return new ResponseEntity<>(productService.getProducts(pageable), HttpStatus.OK);
     }
 
+    @GetMapping(value = "search")
+    public ResponseEntity<Page<Product>> search(Pageable pageable) {
+        return new ResponseEntity<>(productService.searchProducts(pageable), HttpStatus.OK);
+    }
+
 }

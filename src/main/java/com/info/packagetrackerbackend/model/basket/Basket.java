@@ -1,5 +1,6 @@
 package com.info.packagetrackerbackend.model.basket;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.info.packagetrackerbackend.model.Product;
 import com.info.packagetrackerbackend.model.auth.SystemUser;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class Basket {
             mappedBy = "basket",
             cascade = CascadeType.ALL
     )
+    @JsonManagedReference
     private Set<Product> products = new HashSet<>();
 
 }

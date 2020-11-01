@@ -1,8 +1,8 @@
 FROM maven:3.6.1-jdk-11-slim as build
 RUN mkdir -p /workspace
 WORKDIR /workspace
-COPY ../pom.xml /workspace
-COPY ../src /workspace/src
+COPY pom.xml /workspace
+COPY src /workspace/src
 RUN mvn -f pom.xml clean package -DskipTests=true
 
 FROM openjdk:15-alpine
