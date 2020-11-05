@@ -1,13 +1,9 @@
 package com.info.packagetrackerbackend.service;
 
 import com.info.packagetrackerbackend.model.Product;
-import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.model.basket.AddToBasket;
 import com.info.packagetrackerbackend.model.basket.Basket;
 import com.info.packagetrackerbackend.service.repository.BasketRepository;
-import com.info.packagetrackerbackend.service.repository.SystemUserRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,12 +14,12 @@ public class BasketService {
 
     private ProductService productService;
     private BasketRepository basketRepository;
-    private SystemUserRepository userRepository;
+    private SystemUserHelper userHelper;
 
-    public BasketService(ProductService productService, BasketRepository basketRepository, SystemUserRepository userRepository) {
+    public BasketService(ProductService productService, BasketRepository basketRepository, SystemUserHelper userHelper) {
         this.productService = productService;
         this.basketRepository = basketRepository;
-        this.userRepository = userRepository;
+        this.userHelper = userHelper;
     }
 
     public Basket create(Basket basket) {
@@ -40,9 +36,24 @@ public class BasketService {
     }
 
     public Basket getByOwner() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SystemUser user = userRepository.findByUsername(authentication.getName()).orElseGet(SystemUser::new);
-        return basketRepository.getByOwnerId(user.getId());
+        return basketRepository.getByOwnerId(userHelper.getCurrentUser().getId());
+    }
+
+    public Long count() {
+        return basketRepository.countProductsInBasket(userHelper.getCurrentUser().getId());
+    }
+
+    public Basket deleteProduct(Long basketId, Product product) {
+        Basket basket = basketRepository.findById(basketId).orElseGet(Basket::new);
+        basket.getProducts().forEach(p -> deleteBasketFromProduct(p, product.getId()));
+        basketRepository.save(basket);
+        return basket;
+    }
+
+    private void deleteBasketFromProduct(Product product, Long deleteProductId) {
+        if (product.getId().equals(deleteProductId)) {
+            product.setBasket(null);
+        }
     }
 
 }

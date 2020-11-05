@@ -1,7 +1,7 @@
 package com.info.packagetrackerbackend.service;
 
 import com.info.packagetrackerbackend.model.auth.SystemUser;
-import com.info.packagetrackerbackend.service.repository.SystemUserRepository;
+import com.info.packagetrackerbackend.security.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -9,15 +9,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemUserHelper {
 
-    private SystemUserRepository userRepository;
-
-    public SystemUserHelper(SystemUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SystemUser getCurrentUser() {
+        return mapToSystemUser(SecurityContextHolder.getContext().getAuthentication());
     }
 
-    public SystemUser getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return userRepository.findByUsername(authentication.getName()).orElseGet(SystemUser::new);
+    private SystemUser mapToSystemUser(Authentication authentication) {
+        SystemUser user = new SystemUser();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        user.setId(userDetails.getId());
+        user.setEmail(userDetails.getEmail());
+        user.setUsername(userDetails.getUsername());
+        return user;
     }
 
 }
