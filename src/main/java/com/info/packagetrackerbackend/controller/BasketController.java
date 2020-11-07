@@ -25,7 +25,7 @@ public class BasketController {
         this.addToBasketValidator = addToBasketValidator;
     }
 
-    @InitBinder
+    @InitBinder("addToBasket")
     private void bindValidator(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(addToBasketValidator);
     }
@@ -37,7 +37,7 @@ public class BasketController {
 
     @PostMapping(value = "/add/product")
     public ResponseEntity<Basket> addProduct(@Valid @RequestBody AddToBasket addToBasket) {
-        return new ResponseEntity<>(basketService.addProduct(addToBasket), HttpStatus.OK);
+        return new ResponseEntity<>(basketService.addProductToBasket(addToBasket), HttpStatus.OK);
     }
 
     @GetMapping(value = "/count")
@@ -47,7 +47,7 @@ public class BasketController {
 
     @DeleteMapping(value = "/delete/{basketId}/product")
     public ResponseEntity<Basket> deleteProduct(@PathVariable("basketId") Long basketId, @RequestBody Product product) {
-        return new ResponseEntity<>(basketService.deleteProduct(basketId, product), HttpStatus.OK);
+        return new ResponseEntity<>(basketService.deleteProductFromBasket(basketId, product), HttpStatus.OK);
     }
 
 }
