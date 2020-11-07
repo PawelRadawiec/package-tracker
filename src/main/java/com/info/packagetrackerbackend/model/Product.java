@@ -31,6 +31,8 @@ public class Product {
     @NotEmpty
     private String code;
 
+    private Boolean inBasket;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)

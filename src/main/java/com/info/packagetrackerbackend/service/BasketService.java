@@ -4,6 +4,7 @@ import com.info.packagetrackerbackend.model.Product;
 import com.info.packagetrackerbackend.model.basket.AddToBasket;
 import com.info.packagetrackerbackend.model.basket.Basket;
 import com.info.packagetrackerbackend.service.repository.BasketRepository;
+import com.info.packagetrackerbackend.service.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,11 +15,13 @@ public class BasketService {
 
     private ProductService productService;
     private BasketRepository basketRepository;
+    private ProductRepository productRepository;
     private SystemUserHelper userHelper;
 
-    public BasketService(ProductService productService, BasketRepository basketRepository, SystemUserHelper userHelper) {
+    public BasketService(ProductService productService, BasketRepository basketRepository, ProductRepository productRepository, SystemUserHelper userHelper) {
         this.productService = productService;
         this.basketRepository = basketRepository;
+        this.productRepository = productRepository;
         this.userHelper = userHelper;
     }
 
@@ -27,11 +30,13 @@ public class BasketService {
         return basket;
     }
 
-    public Basket addProduct(AddToBasket request) {
-        Product product = request.getProduct();
-        Basket basket = request.getBasket();
-        product.setBasket(basket);
-        productService.create(product);
+    public Basket addProduct(AddToBasket addToBasket) {
+        Basket basket = basketRepository.findById(addToBasket.getBasket().getId()).orElseGet(Basket::new);
+        Product fullProduct = productRepository.findById(addToBasket.getProduct().getId()).orElseGet(Product::new);
+        fullProduct.setInBasket(true);
+        fullProduct.setBasket(basket);
+        basket.getProducts().add(fullProduct);
+        basketRepository.save(basket);
         return basket;
     }
 
@@ -53,6 +58,7 @@ public class BasketService {
     private void deleteBasketFromProduct(Product product, Long deleteProductId) {
         if (product.getId().equals(deleteProductId)) {
             product.setBasket(null);
+            product.setInBasket(false);
         }
     }
 

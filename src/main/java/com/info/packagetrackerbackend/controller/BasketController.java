@@ -4,9 +4,13 @@ import com.info.packagetrackerbackend.model.Product;
 import com.info.packagetrackerbackend.model.basket.AddToBasket;
 import com.info.packagetrackerbackend.model.basket.Basket;
 import com.info.packagetrackerbackend.service.BasketService;
+import com.info.packagetrackerbackend.validators.AddToBasketValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin("*")
@@ -14,9 +18,16 @@ import org.springframework.web.bind.annotation.*;
 public class BasketController {
 
     private BasketService basketService;
+    private AddToBasketValidator addToBasketValidator;
 
-    public BasketController(BasketService basketService) {
+    public BasketController(BasketService basketService, AddToBasketValidator addToBasketValidator) {
         this.basketService = basketService;
+        this.addToBasketValidator = addToBasketValidator;
+    }
+
+    @InitBinder
+    private void bindValidator(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(addToBasketValidator);
     }
 
     @GetMapping(value = "/owner")
@@ -24,9 +35,9 @@ public class BasketController {
         return new ResponseEntity<>(basketService.getByOwner(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/add")
-    public ResponseEntity<Basket> addProduct(@RequestBody AddToBasket request) {
-        return new ResponseEntity<>(basketService.addProduct(request), HttpStatus.OK);
+    @PostMapping(value = "/add/product")
+    public ResponseEntity<Basket> addProduct(@Valid @RequestBody AddToBasket addToBasket) {
+        return new ResponseEntity<>(basketService.addProduct(addToBasket), HttpStatus.OK);
     }
 
     @GetMapping(value = "/count")
