@@ -31,7 +31,7 @@ public class Product {
     @NotEmpty
     private String code;
 
-    private Boolean inBasket;
+    private Boolean available;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

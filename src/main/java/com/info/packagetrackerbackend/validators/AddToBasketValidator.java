@@ -27,7 +27,7 @@ public class AddToBasketValidator extends GenericValidator implements Validator 
     }
 
     private void validateProduct(AddToBasket addToBasket, Errors errors) {
-        validateIfTrue(productRepository.inBasket(addToBasket.getProduct().getId()), "basket", "Product unavailable", errors);
+        validateIfTrue(!productRepository.available(addToBasket.getProduct().getId()), "basket", "Product unavailable", errors);
     }
 
 }

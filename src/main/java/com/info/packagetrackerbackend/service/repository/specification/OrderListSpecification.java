@@ -28,6 +28,7 @@ public class OrderListSpecification extends BaseSpecification<Order, OrderListRe
         return orderAttributesContains("code", code);
     }
 
+
     private Specification<Order> orderAttributesContains(String attribute, String value) {
         return ((root, criteriaQuery, criteriaBuilder) -> {
             if (value == null) {

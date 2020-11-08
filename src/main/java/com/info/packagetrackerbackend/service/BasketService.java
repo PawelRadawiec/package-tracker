@@ -30,7 +30,7 @@ public class BasketService {
     public Basket addProductToBasket(AddToBasket addToBasket) {
         Basket basket = basketRepository.findById(addToBasket.getBasket().getId()).orElseGet(Basket::new);
         Product fullProduct = productRepository.findById(addToBasket.getProduct().getId()).orElseGet(Product::new);
-        fullProduct.setInBasket(true);
+        fullProduct.setAvailable(false);
         fullProduct.setBasket(basket);
         basket.getProducts().add(fullProduct);
         basketRepository.save(basket);
@@ -52,7 +52,7 @@ public class BasketService {
     public Basket deleteProductFromBasket(Long basketId, Product product) {
         Product dbProduct = productRepository.findById(product.getId()).orElseGet(Product::new);
         dbProduct.setBasket(null);
-        dbProduct.setInBasket(false);
+        dbProduct.setAvailable(true);
         productRepository.save(dbProduct);
         return getById(basketId);
     }

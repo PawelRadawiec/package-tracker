@@ -1,6 +1,7 @@
 package com.info.packagetrackerbackend.controller;
 
 import com.info.packagetrackerbackend.model.Product;
+import com.info.packagetrackerbackend.model.ProductListRequest;
 import com.info.packagetrackerbackend.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,8 +33,8 @@ public class ProductController {
     }
 
     @GetMapping(value = "search")
-    public ResponseEntity<Page<Product>> search(Pageable pageable) {
-        return new ResponseEntity<>(productService.searchProducts(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<Product>> search(ProductListRequest request, Pageable pageable) {
+        return new ResponseEntity<>(productService.searchProducts(request, pageable), HttpStatus.OK);
     }
 
 }
