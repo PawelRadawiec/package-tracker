@@ -12,9 +12,11 @@ public class ProductListSpecification extends BaseSpecification<Product, Product
         return Specification.where(nameContains(request.getSearch()));
     }
 
-
-    public Specification<Product> getOwnerNotInFilter(ProductListRequest request) {
-        return Specification.where(nameContains(request.getName()));
+    public Specification<Product> productsOwnerNotIn(ProductListRequest request) {
+        return Specification.where(nameContains(request.getName()))
+                .and((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.notEqual(
+                        root.join("owner").get("id"), request.getOwnerId())
+                );
     }
 
     private Specification<Product> nameContains(String name) {

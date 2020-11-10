@@ -29,6 +29,8 @@ public class Product {
     private String description;
 
     @NotEmpty
+    private String category;
+
     private String code;
 
     private Boolean available;

@@ -32,7 +32,8 @@ public class ProductService {
     }
 
     public Page<Product> searchProducts(ProductListRequest listRequest, Pageable pageable) {
-        return productRepository.findAll(listSpecification.getOwnerNotInFilter(listRequest), pageable);
+        listRequest.setOwnerId(userHelper.getCurrentUser().getId());
+        return productRepository.findAll(listSpecification.productsOwnerNotIn(listRequest), pageable);
     }
 
 }

@@ -8,4 +8,5 @@ import lombok.Setter;
 public class ProductListRequest {
     private String search;
     private String name;
+    private Long ownerId;
 }
