@@ -1,14 +1,16 @@
-package com.info.packagetrackerbackend.service;
+package com.info.packagetrackerbackend.service.order;
 
 import com.info.packagetrackerbackend.model.order.Order;
 import com.info.packagetrackerbackend.model.order.OrderHistory;
 import com.info.packagetrackerbackend.model.OrganizationColor;
+import com.info.packagetrackerbackend.service.MessageService;
 import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -35,6 +37,7 @@ public class ParcelLockerService {
         return () -> {
             try {
                 Thread.sleep(ThreadLocalRandom.current().nextInt(1_000, 10_000));
+                order.setOrderEndDate(LocalDate.now());
                 create(order);
                 latch.countDown();
             } catch (InterruptedException e) {

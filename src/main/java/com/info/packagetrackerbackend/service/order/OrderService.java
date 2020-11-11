@@ -1,4 +1,4 @@
-package com.info.packagetrackerbackend.service;
+package com.info.packagetrackerbackend.service.order;
 
 import com.info.packagetrackerbackend.model.order.Order;
 import com.info.packagetrackerbackend.model.order.OrderListRequest;
@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -51,6 +52,7 @@ public class OrderService implements TrackerOrderOperation {
     public Order startOrder(Order order) {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         CountDownLatch countDownLatch = new CountDownLatch(4);
+        order.setOrderStartDate(LocalDate.now());
         Arrays.asList(
                 warehouseService.process(order, countDownLatch),
                 sortingPlantService.process(order, countDownLatch),

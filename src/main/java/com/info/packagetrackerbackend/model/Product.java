@@ -2,6 +2,7 @@ package com.info.packagetrackerbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.model.basket.Basket;
 import com.info.packagetrackerbackend.model.order.Order;
@@ -35,6 +36,8 @@ public class Product {
 
     private Boolean available;
 
+    private String pictureAddress;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
@@ -44,7 +47,9 @@ public class Product {
     @JsonBackReference
     private Basket basket;
 
-    @OneToOne(mappedBy = "product")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "order_id")
     private Order order;
 
 }

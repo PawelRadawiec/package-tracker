@@ -1,8 +1,9 @@
-package com.info.packagetrackerbackend.service;
+package com.info.packagetrackerbackend.service.order;
 
 import com.info.packagetrackerbackend.model.order.Order;
 import com.info.packagetrackerbackend.model.order.OrderHistory;
 import com.info.packagetrackerbackend.model.OrganizationColor;
+import com.info.packagetrackerbackend.service.MessageService;
 import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import org.apache.logging.log4j.LogManager;
@@ -14,14 +15,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 @Service
-public class TransportService {
-    private static final Logger logger = LogManager.getLogger(TransportService.class);
+public class WarehouseService {
+    private static final Logger logger = LogManager.getLogger(WarehouseService.class);
 
     private OrderRepository repository;
     private MessageService messageService;
     private OrderHistoryRepository historyRepository;
 
-    public TransportService(
+    public WarehouseService(
             OrderRepository repository,
             MessageService messageService,
             OrderHistoryRepository historyRepository
@@ -44,11 +45,11 @@ public class TransportService {
     }
 
     private void create(Order order) {
-        order.setStatus("TRANSPORT");
-        order.setStatusColor(OrganizationColor.GREEN.getColor());
+        order.setStatus("WAREHOUSE");
+        order.setStatusColor(OrganizationColor.BLUE.getColor());
         repository.save(order);
         historyRepository.save(new OrderHistory(order));
-        logger.info("Package is on way: " + order.toString());
+        logger.info("Process package in warehouse: " + order.toString());
         messageService.sendOrderMessage(order);
     }
 

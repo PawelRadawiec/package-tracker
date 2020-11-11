@@ -5,6 +5,8 @@ import com.info.packagetrackerbackend.model.ProductListRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class ProductListSpecification extends BaseSpecification<Product, ProductListRequest> {
     @Override
@@ -13,9 +15,12 @@ public class ProductListSpecification extends BaseSpecification<Product, Product
     }
 
     public Specification<Product> productsOwnerNotIn(ProductListRequest request) {
-        return Specification.where(nameContains(request.getName()))
+        return Objects.requireNonNull(Specification.where(nameContains(request.getName()))
                 .and((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.notEqual(
                         root.join("owner").get("id"), request.getOwnerId())
+                ))
+                .and(((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.notEqual(
+                        root.get("available"), false))
                 );
     }
 

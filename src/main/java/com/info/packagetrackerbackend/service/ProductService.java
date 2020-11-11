@@ -23,8 +23,26 @@ public class ProductService {
 
     public Product create(Product product) {
         product.setOwner(userHelper.getCurrentUser());
+        switch (product.getCategory()) {
+            case "PC":
+                product.setPictureAddress("https://allegro.stati.pl/AllegroIMG/PRODUCENCI/DELL/Latitude-5401/Dell-Latitude-5401_4.jpg");
+                break;
+            case "PHONE":
+                product.setPictureAddress("https://www.lg.com/ae/images/mobile-phones/md05875115/gallery/LGH930DS-V30-Desktop-01-05092017.jpg");
+                break;
+            case "HEADPHONE":
+                product.setPictureAddress("https://thumbs.static-thomann.de/thumb/orig/pics/bdb/482802/15092208_800.jpg");
+        }
         productRepository.save(product);
         return product;
+    }
+
+    public Product update(Product product) {
+        return productRepository.save(product);
+    }
+
+    public Product findById(Long id) {
+        return  productRepository.findById(id).orElseGet(Product::new);
     }
 
     public Page<Product> getProducts(Pageable pageable) {

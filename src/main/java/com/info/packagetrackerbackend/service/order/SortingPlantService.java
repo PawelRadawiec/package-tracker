@@ -1,8 +1,9 @@
-package com.info.packagetrackerbackend.service;
+package com.info.packagetrackerbackend.service.order;
 
 import com.info.packagetrackerbackend.model.order.Order;
 import com.info.packagetrackerbackend.model.order.OrderHistory;
 import com.info.packagetrackerbackend.model.OrganizationColor;
+import com.info.packagetrackerbackend.service.MessageService;
 import com.info.packagetrackerbackend.service.repository.OrderHistoryRepository;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import org.apache.logging.log4j.LogManager;
@@ -14,14 +15,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 @Service
-public class WarehouseService {
-    private static final Logger logger = LogManager.getLogger(WarehouseService.class);
+public class SortingPlantService {
+    private static final Logger logger = LogManager.getLogger(SortingPlantService.class);
 
     private OrderRepository repository;
     private MessageService messageService;
     private OrderHistoryRepository historyRepository;
 
-    public WarehouseService(
+    public SortingPlantService(
             OrderRepository repository,
             MessageService messageService,
             OrderHistoryRepository historyRepository
@@ -44,11 +45,11 @@ public class WarehouseService {
     }
 
     private void create(Order order) {
-        order.setStatus("WAREHOUSE");
-        order.setStatusColor(OrganizationColor.BLUE.getColor());
+        order.setStatus("SORTING_PLANT");
+        order.setStatusColor(OrganizationColor.YELLOW.getColor());
         repository.save(order);
         historyRepository.save(new OrderHistory(order));
-        logger.info("Process package in warehouse: " + order.toString());
+        logger.info("Process package in sorting plant: " + order.toString());
         messageService.sendOrderMessage(order);
     }
 
