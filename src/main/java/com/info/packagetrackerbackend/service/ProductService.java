@@ -33,6 +33,7 @@ public class ProductService {
             case "HEADPHONE":
                 product.setPictureAddress("https://thumbs.static-thomann.de/thumb/orig/pics/bdb/482802/15092208_800.jpg");
         }
+        product.setAvailable(true);
         productRepository.save(product);
         return product;
     }

@@ -1,9 +1,7 @@
 package com.info.packagetrackerbackend.service.order;
 
 import com.info.packagetrackerbackend.model.Product;
-import com.info.packagetrackerbackend.model.auth.SystemUser;
 import com.info.packagetrackerbackend.model.order.Order;
-import com.info.packagetrackerbackend.model.order.PersonOrder;
 import com.info.packagetrackerbackend.service.ProductService;
 import com.info.packagetrackerbackend.service.SystemUserHelper;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
@@ -41,13 +39,8 @@ public class PackageStartService {
     }
 
     private void appendOrder(Order order) {
-        SystemUser user = userHelper.getCurrentUser();
-        PersonOrder personOrder = new PersonOrder();
-        personOrder.setFirstName(user.getFirstName());
-        personOrder.setLastName(user.getLastName());
-        personOrder.setEmail(user.getEmail());
         order.setName("Order of product with name: " + order.getProduct().getName());
-        order.setPerson(personOrder);
+        order.setOwner(userHelper.getCurrentUser());
         order.setProduct(null);
     }
 

@@ -5,6 +5,8 @@ import com.info.packagetrackerbackend.model.order.OrderListRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class OrderListSpecification extends BaseSpecification<Order, OrderListRequest> {
 
@@ -15,9 +17,12 @@ public class OrderListSpecification extends BaseSpecification<Order, OrderListRe
     }
 
     public Specification<Order> getFilter(OrderListRequest request) {
-        return Specification
+        return Objects.requireNonNull(Specification
                 .where(nameContains(request.getName()))
-                .or(codeContains(request.getCode()));
+                .and((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(
+                        root.join("owner").get("id"), request.getOwnerId()
+                ))
+        );
     }
 
     private Specification<Order> nameContains(String name) {

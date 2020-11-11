@@ -1,8 +1,10 @@
 package com.info.packagetrackerbackend.model.order;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.info.packagetrackerbackend.model.Product;
+import com.info.packagetrackerbackend.model.auth.SystemUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,6 +59,11 @@ public class Order {
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     @JsonManagedReference
     private PersonOrder person;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private SystemUser owner;
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)

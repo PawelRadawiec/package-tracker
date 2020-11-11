@@ -2,6 +2,7 @@ package com.info.packagetrackerbackend.service.order;
 
 import com.info.packagetrackerbackend.model.order.Order;
 import com.info.packagetrackerbackend.model.order.OrderListRequest;
+import com.info.packagetrackerbackend.service.SystemUserHelper;
 import com.info.packagetrackerbackend.service.operations.TrackerOrderOperation;
 import com.info.packagetrackerbackend.service.repository.OrderRepository;
 import com.info.packagetrackerbackend.service.repository.specification.OrderListSpecification;
@@ -27,12 +28,13 @@ public class OrderService implements TrackerOrderOperation {
     private PackageStartService packageStartService;
     private OrderRepository orderRepository;
     private OrderListSpecification listSpecification;
+    private SystemUserHelper userHelper;
 
     public OrderService(
             WarehouseService warehouseService, SortingPlantService sortingPlantService,
             TransportService transportService, ParcelLockerService lockerService,
             PackageStartService packageStartService, OrderRepository orderRepository,
-            OrderListSpecification listSpecification) {
+            OrderListSpecification listSpecification, SystemUserHelper userHelper) {
         this.warehouseService = warehouseService;
         this.sortingPlantService = sortingPlantService;
         this.transportService = transportService;
@@ -40,6 +42,7 @@ public class OrderService implements TrackerOrderOperation {
         this.packageStartService = packageStartService;
         this.orderRepository = orderRepository;
         this.listSpecification = listSpecification;
+        this.userHelper = userHelper;
     }
 
     public Order createOrder(Order order) {
@@ -52,6 +55,7 @@ public class OrderService implements TrackerOrderOperation {
     public Order startOrder(Order order) {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         CountDownLatch countDownLatch = new CountDownLatch(4);
+        order.setOwner(userHelper.getCurrentUser());
         order.setOrderStartDate(LocalDate.now());
         Arrays.asList(
                 warehouseService.process(order, countDownLatch),
@@ -76,6 +80,7 @@ public class OrderService implements TrackerOrderOperation {
 
     @Override
     public Page<Order> search(OrderListRequest request, Pageable pageable) {
+        request.setOwnerId(userHelper.getCurrentUser().getId());
         return orderRepository.findAll(listSpecification.getFilter(request), pageable);
     }
 

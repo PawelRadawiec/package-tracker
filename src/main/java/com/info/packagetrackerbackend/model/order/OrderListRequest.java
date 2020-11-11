@@ -11,4 +11,5 @@ public class OrderListRequest {
     private String code;
     private String orderType;
     private String transportType;
+    private Long ownerId;
 }
